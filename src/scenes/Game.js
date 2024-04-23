@@ -50,7 +50,7 @@ export class Game extends Scene {
         }
         if (this.spaceBar.isDown) {
             this.player.anims.play("fire");
-            if (this.frame % 4 === 0) {
+            if (this.frame % 7 === 0) {
                 let bullet = this.bullets.create(
                     this.player.body.position.x,
                     this.player.body.position.y,
