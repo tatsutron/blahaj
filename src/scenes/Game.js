@@ -4,7 +4,6 @@ export class Game extends Scene {
     frame = 0;
     cusors;
     player;
-    bullets;
     spaceBar;
 
     constructor() {
@@ -15,8 +14,7 @@ export class Game extends Scene {
         this.cameras.main.setBackgroundColor(0x000000);
         this.add.image(512, 384, "background").setAlpha(0.33);
 
-        this.player = this.physics.add.sprite(512, 384, "blahaj");
-        this.player.setDrag(10);
+        this.player = this.matter.add.sprite(512, 384, "blahaj");
         this.player.setScale(4);
         this.anims.create({
             key: "aim",
@@ -26,7 +24,6 @@ export class Game extends Scene {
             key: "fire",
             frames: [{ key: "blahaj", frame: 1 }],
         });
-        this.bullets = this.physics.add.group();
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.spaceBar = this.input.keyboard.addKey(
@@ -39,38 +36,27 @@ export class Game extends Scene {
 
     update() {
         if (this.cursors.left.isDown) {
-            this.player.angle -= 2;
+            this.player.setAngularVelocity(-0.075);
+        } else if (this.cursors.right.isDown) {
+            this.player.setAngularVelocity(0.075);
+        } else {
+            this.player.setAngularVelocity(0);
         }
-        if (this.cursors.right.isDown) {
-            this.player.angle += 2;
-        }
+
         if (this.cursors.up.isDown) {
-            this.player.body.velocity.x += Math.cos(this.player.rotation) * 5;
-            this.player.body.velocity.y += Math.sin(this.player.rotation) * 5;
+            this.player.thrust(0.00667);
         }
         if (this.spaceBar.isDown) {
             this.player.anims.play("fire");
             if (this.frame % 7 === 0) {
-                let bullet = this.bullets.create(
-                    this.player.body.position.x,
-                    this.player.body.position.y,
-                    "bullet",
-                );
-                bullet.setScale(4);
-                bullet.angle = this.player.angle;
-                this.physics.velocityFromAngle(
-                    bullet.angle,
-                    1000,
-                    bullet.body.velocity,
-                );
                 this.player.anims.play("fire");
+                // TODO Fire bullet
             } else {
                 this.player.anims.play("aim");
             }
         } else {
             this.player.anims.play("aim");
         }
-        this.physics.world.wrap(this.player, 64);
         this.frame += 1;
     }
 }
