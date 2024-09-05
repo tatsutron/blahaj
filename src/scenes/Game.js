@@ -39,14 +39,6 @@ export class Game extends Scene {
             },
         );
         this.player.setScale(4);
-        this.anims.create({
-            key: "aim",
-            frames: [{ key: "blahaj", frame: 0 }],
-        });
-        this.anims.create({
-            key: "fire",
-            frames: [{ key: "blahaj", frame: 1 }],
-        });
 
         this.bullets = [];
         for (let i = 0; i < 64; i += 1) {
