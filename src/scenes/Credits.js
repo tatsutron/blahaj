@@ -17,5 +17,9 @@ export class Credits extends Scene {
         );
         title.setOrigin(0.5, 0.5);
         title.tint = "0xff0000";
+
+        this.input.keyboard.on("keydown-R", (event) => {
+            this.scene.start("Menu");
+        });
     }
 }
