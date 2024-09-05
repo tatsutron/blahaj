@@ -1,11 +1,14 @@
 import { Scene } from "phaser";
 import { Screen } from "../util/Screen";
 
+const REPEAT_DELAY = (7 / 60) * 1000;
+
 export class Game extends Scene {
     frame = 0;
 
     player;
     bullets;
+    firedWhen = -1;
 
     cursors;
     spaceBar;
@@ -69,7 +72,7 @@ export class Game extends Scene {
         });
     }
 
-    update() {
+    update(time, delta) {
         if (this.cursors.left.isDown) {
             this.player.setAngularVelocity(-0.075);
         } else if (this.cursors.right.isDown) {
@@ -81,38 +84,32 @@ export class Game extends Scene {
         if (this.cursors.up.isDown) {
             this.player.thrust(0.00667);
         }
-        if (this.spaceBar.isDown) {
+
+        let bullet = this.bullets.find((bullet) => !bullet.active);
+        let canFire = time - this.firedWhen > REPEAT_DELAY;
+        if (this.spaceBar.isDown && bullet && canFire) {
             this.player.anims.play("fire");
-            // TODO Base this on dt, not frames
-            if (this.frame % 7 === 0) {
-                this.player.anims.play("fire");
-                // TODO Clean this all up
-                let bullet = this.bullets.find((bullet) => !bullet.active);
-                if (bullet) {
-                    bullet.world.add(bullet.body);
-                    let p = new Phaser.Math.Vector3(96, 4, 0);
-                    let r = new Phaser.Math.Matrix3();
-                    r.rotate(this.player.rotation);
-                    p.applyMatrix3(r);
-                    p.x += this.player.body.position.x;
-                    p.y += this.player.body.position.y;
-                    bullet.setPosition(p.x, p.y);
-                    bullet.setRotation(this.player.rotation);
-                    let speed = 20;
-                    bullet.setVelocityX(
-                        this.player.body.velocity.x +
-                            Math.cos(this.player.rotation) * speed,
-                    );
-                    bullet.setVelocityY(
-                        this.player.body.velocity.y +
-                            Math.sin(this.player.rotation) * speed,
-                    );
-                    bullet.setActive(true);
-                    bullet.setVisible(true);
-                }
-            } else {
-                this.player.anims.play("aim");
-            }
+            bullet.world.add(bullet.body);
+            let p = new Phaser.Math.Vector3(96, 4, 0);
+            let r = new Phaser.Math.Matrix3();
+            r.rotate(this.player.rotation);
+            p.applyMatrix3(r);
+            p.x += this.player.body.position.x;
+            p.y += this.player.body.position.y;
+            bullet.setPosition(p.x, p.y);
+            bullet.setRotation(this.player.rotation);
+            let speed = 20;
+            bullet.setVelocityX(
+                this.player.body.velocity.x +
+                    Math.cos(this.player.rotation) * speed,
+            );
+            bullet.setVelocityY(
+                this.player.body.velocity.y +
+                    Math.sin(this.player.rotation) * speed,
+            );
+            bullet.setActive(true);
+            bullet.setVisible(true);
+            this.firedWhen = time;
         } else {
             this.player.anims.play("aim");
         }
