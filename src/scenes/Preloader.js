@@ -36,10 +36,7 @@ export class Preloader extends Scene {
     preload() {
         //  Load the assets for the game - Replace with your own assets
         this.load.setPath("assets");
-
         this.load.bitmapFont("font", fontTexture, fontData);
-
-        this.load.image("logo", "logo.png");
         this.load.spritesheet("blahaj", "blahaj.png", {
             frameWidth: 43,
             frameHeight: 14,
