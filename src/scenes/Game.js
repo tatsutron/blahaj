@@ -5,7 +5,7 @@ export class Game extends Scene {
     frame = 0;
 
     player;
-    bullets = [];
+    bullets;
 
     cursors;
     spaceBar;
@@ -48,6 +48,7 @@ export class Game extends Scene {
             frames: [{ key: "blahaj", frame: 1 }],
         });
 
+        this.bullets = [];
         for (let i = 0; i < 64; i += 1) {
             // TODO Clean this all up
             let bullet = this.matter.add.sprite(
@@ -103,7 +104,6 @@ export class Game extends Scene {
                     p.applyMatrix3(r);
                     p.x += this.player.body.position.x;
                     p.y += this.player.body.position.y;
-
                     bullet.setPosition(p.x, p.y);
                     bullet.setRotation(this.player.rotation);
                     let speed = 20;
