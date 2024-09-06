@@ -1,8 +1,6 @@
 import { Scene } from "phaser";
 import { Screen } from "../util/Screen";
 
-const REPEAT_DELAY = (7 / 60) * 1000;
-
 export class Game extends Scene {
     frame = 0;
 
@@ -45,21 +43,17 @@ export class Game extends Scene {
 
         this.bullets = [];
         for (let i = 0; i < 64; i += 1) {
-            // TODO Clean this all up
             let bullet = this.matter.add.sprite(
                 0, // x
                 0, // y
                 "bullet",
             );
             bullet.setScale(4);
-            bullet.setActive(false);
-            bullet.setVisible(false);
-            // TODO Understand what this line is doing
-            bullet.scene.add.existing(bullet);
-            // TODO Understand what this line is doing
-            bullet.world.remove(bullet.body, true);
             bullet.setFrictionAir(0);
             bullet.setCollidesWith([]);
+            bullet.setActive(false);
+            bullet.setVisible(false);
+            bullet.world.remove(bullet.body, true);
             this.bullets.push(bullet);
         }
 
@@ -85,11 +79,11 @@ export class Game extends Scene {
             this.player.thrust(0.00667);
         }
 
+        const delay = (7 / 60) * 1000;
         let bullet = this.bullets.find((bullet) => !bullet.active);
-        let canFire = time - this.firedWhen > REPEAT_DELAY;
+        let canFire = time - this.firedWhen > delay;
         if (this.spaceBar.isDown && bullet && canFire) {
             this.player.anims.play("fire");
-            bullet.world.add(bullet.body);
             let p = new Phaser.Math.Vector3(96, 4, 0);
             let r = new Phaser.Math.Matrix3();
             r.rotate(this.player.rotation);
@@ -109,6 +103,7 @@ export class Game extends Scene {
             );
             bullet.setActive(true);
             bullet.setVisible(true);
+            bullet.world.add(bullet.body);
             this.firedWhen = time;
         } else {
             this.player.anims.play("aim");
