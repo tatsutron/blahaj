@@ -2,6 +2,7 @@ import { Game } from "../scenes/Game";
 import { Player } from "./Player";
 
 const MAX_BULLETS = 8;
+const BULLET_OFFSET = new Phaser.Math.Vector3(96, 4, 0);
 const BULLET_SPEED = 20;
 const BULLET_TTL = 1000;
 
@@ -70,8 +71,9 @@ export class Weapon {
     }
 
     fire({ bullet, playerPos, playerVel, playerRot }) {
-        // Offset relative to player position
-        let pos = new Phaser.Math.Vector3(96, 4, 0);
+        let pos = new Phaser.Math.Vector3();
+        pos.x = BULLET_OFFSET.x;
+        pos.y = BULLET_OFFSET.y;
         let rot = new Phaser.Math.Matrix3();
         rot.rotate(playerRot);
         pos.applyMatrix3(rot);
