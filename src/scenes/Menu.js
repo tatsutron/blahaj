@@ -73,7 +73,7 @@ export class Menu extends Scene {
             Screen.center.x + textShadowOffset,
             64 + 32 * 1 + textShadowOffset,
             "font",
-            "001.BLAHAJSTERRHOIDS",
+            "001.BLAHAJ BLASTER  ",
         );
         blahajsterrhoidsShadow.setOrigin(0.5, 0.5);
         blahajsterrhoidsShadow.scale = 0.5;
@@ -82,7 +82,7 @@ export class Menu extends Scene {
             Screen.center.x,
             64 + 32 * 1,
             "font",
-            "001.BLAHAJSTERRHOIDS",
+            "001.BLAHAJ BLASTER  ",
         );
         blahajsterrhoids.setOrigin(0.5, 0.5);
         blahajsterrhoids.scale = 0.5;

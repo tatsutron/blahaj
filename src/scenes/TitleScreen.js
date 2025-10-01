@@ -13,10 +13,10 @@ export class TitleScreen extends Scene {
             Screen.center.x,
             Screen.center.y,
             "font",
-            "BLAHAJSTERRHOIDS",
+            "BLAHAJ BLASTER",
         );
         title.setOrigin(0.5, 0.5);
-        title.tint = "0xff0000";
+        title.tint = "0xF5a9b8";
 
         this.input.keyboard.on("keydown-ENTER", (event) => {
             this.scene.start("Game");

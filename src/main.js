@@ -4,7 +4,6 @@ import { Preloader } from "./scenes/Preloader";
 import { Menu } from "./scenes/Menu";
 import { TitleScreen } from "./scenes/TitleScreen";
 import { Game } from "./scenes/Game";
-import { Credits } from "./scenes/Credits";
 
 //  Find out more information about the Game Config at:
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
@@ -26,7 +25,7 @@ const config = {
             debug: false,
         },
     },
-    scene: [Boot, Preloader, Menu, TitleScreen, Game, Credits],
+    scene: [Boot, Preloader, Menu, TitleScreen, Game],
 };
 
 export default new Phaser.Game(config);

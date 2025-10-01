@@ -15,7 +15,7 @@ export class Game extends Scene {
         this.player = new Player({ game: this });
 
         this.input.keyboard.on("keydown-Q", (event) => {
-            this.scene.start("Credits");
+            this.scene.start("Menu");
         });
     }
 
