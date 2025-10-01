@@ -8,7 +8,7 @@ const BULLET_TTL = 1000;
 export class Weapon {
     spaceBar;
     bullets;
-    firedWhen = -1;
+    firedWhen;
 
     constructor({ game, player }) {
         this.player = player;
@@ -24,12 +24,20 @@ export class Weapon {
                 0, // y
                 "bullet",
             );
+            bullet.enable = () => {
+                bullet.setActive(true);
+                bullet.setVisible(true);
+                bullet.world.add(bullet.body);
+            };
+            bullet.disable = () => {
+                bullet.setActive(false);
+                bullet.setVisible(false);
+                bullet.world.remove(bullet.body, true);
+            };
             bullet.setScale(4);
             bullet.setFrictionAir(0);
             bullet.setCollidesWith([]);
-            bullet.setActive(false);
-            bullet.setVisible(false);
-            bullet.world.remove(bullet.body, true);
+            bullet.disable();
             this.bullets.push(bullet);
         }
     }
@@ -37,7 +45,7 @@ export class Weapon {
     update({ time, delta, player }) {
         const delay = (7 / 60) * 1000;
         let bullet = this.bullets.find((bullet) => !bullet.active);
-        let canFire = time - this.firedWhen > delay;
+        let canFire = !this.firedWhen || time - this.firedWhen > delay;
         if (this.spaceBar.isDown && bullet && canFire) {
             player.sprite.anims.play("fire");
             this.fire({
@@ -55,9 +63,7 @@ export class Weapon {
             if (bullet.active) {
                 bullet.ttl -= delta;
                 if (bullet.ttl <= 0) {
-                    bullet.setActive(false);
-                    bullet.setVisible(false);
-                    bullet.world.remove(bullet.body, true);
+                    bullet.disable();
                 }
             }
         });
@@ -79,8 +85,6 @@ export class Weapon {
         bullet.setRotation(playerRot);
         bullet.setVelocityX(velX);
         bullet.setVelocityY(velY);
-        bullet.setActive(true);
-        bullet.setVisible(true);
-        bullet.world.add(bullet.body);
+        bullet.enable();
     }
 }

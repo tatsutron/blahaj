@@ -16,7 +16,7 @@ export class TitleScreen extends Scene {
             "BLAHAJ BLASTER",
         );
         title.setOrigin(0.5, 0.5);
-        title.tint = "0xF5a9b8";
+        title.tint = "0xf5a9b8";
 
         this.input.keyboard.on("keydown-ENTER", (event) => {
             this.scene.start("Game");
