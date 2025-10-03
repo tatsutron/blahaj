@@ -1,10 +1,10 @@
 import { Game } from "../scenes/Game";
 import { Player } from "./Player";
 
-const MAX_BULLETS = 8;
+const MAX_BULLETS = 16;
 const BULLET_OFFSET = new Phaser.Math.Vector3(96, 4, 0);
 const BULLET_SPEED = 20;
-const BULLET_TTL = 1000;
+const BULLET_TTL = 2000;
 
 export class Weapon {
     spaceBar;
