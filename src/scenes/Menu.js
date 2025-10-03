@@ -344,7 +344,6 @@ export class Menu extends Scene {
             delay: 500,
             callback: () => {
                 this.blinkingTextVisible = !this.blinkingTextVisible;
-                console.log(this.blinkingTextVisible);
                 if (this.blinkingTextVisible) {
                     subtitleShadow.setWordTint(
                         "SEL",
