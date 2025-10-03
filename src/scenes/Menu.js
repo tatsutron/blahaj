@@ -15,6 +15,8 @@ const cursorColorShadow = 0x808080;
 const textShadowOffset = 3;
 
 export class Menu extends Scene {
+    blinkingTextVisible = true;
+
     constructor() {
         super("Menu");
     }
@@ -69,24 +71,24 @@ export class Menu extends Scene {
         subtitle.setWordTint("SEL", -1, true, highlightedTextColor);
         subtitle.setWordTint("START", -1, true, highlightedTextColor);
 
-        let blahajsterrhoidsShadow = this.add.bitmapText(
+        let game1Shadow = this.add.bitmapText(
             Screen.center.x + textShadowOffset,
             64 + 32 * 1 + textShadowOffset,
             "font",
             "001.BLAHAJ BLASTER  ",
         );
-        blahajsterrhoidsShadow.setOrigin(0.5, 0.5);
-        blahajsterrhoidsShadow.scale = 0.5;
-        blahajsterrhoidsShadow.tint = gameTextColorShadow;
-        let blahajsterrhoids = this.add.bitmapText(
+        game1Shadow.setOrigin(0.5, 0.5);
+        game1Shadow.scale = 0.5;
+        game1Shadow.tint = gameTextColorShadow;
+        let game1 = this.add.bitmapText(
             Screen.center.x,
             64 + 32 * 1,
             "font",
             "001.BLAHAJ BLASTER  ",
         );
-        blahajsterrhoids.setOrigin(0.5, 0.5);
-        blahajsterrhoids.scale = 0.5;
-        blahajsterrhoids.tint = gameTextColor;
+        game1.setOrigin(0.5, 0.5);
+        game1.scale = 0.5;
+        game1.tint = gameTextColor;
 
         let game2Shadow = this.add.bitmapText(
             Screen.center.x + textShadowOffset,
@@ -298,7 +300,7 @@ export class Menu extends Scene {
         game12.tint = gameTextColor;
 
         let games = [];
-        games.push(blahajsterrhoids);
+        games.push(game1);
         games.push(game2);
         games.push(game3);
         games.push(game4);
@@ -336,6 +338,42 @@ export class Menu extends Scene {
             if (index === 0) {
                 this.scene.start("TitleScreen");
             }
+        });
+
+        this.time.addEvent({
+            delay: 500,
+            callback: () => {
+                this.blinkingTextVisible = !this.blinkingTextVisible;
+                console.log(this.blinkingTextVisible);
+                if (this.blinkingTextVisible) {
+                    subtitleShadow.setWordTint(
+                        "SEL",
+                        -1,
+                        true,
+                        highlightedTextColorShadow,
+                    );
+                    subtitleShadow.setWordTint(
+                        "START",
+                        -1,
+                        true,
+                        highlightedTextColorShadow,
+                    );
+                    subtitle.setWordTint("SEL", -1, true, highlightedTextColor);
+                    subtitle.setWordTint(
+                        "START",
+                        -1,
+                        true,
+                        highlightedTextColor,
+                    );
+                } else {
+                    subtitleShadow.setWordTint("SEL", -1, true, 0x000000);
+                    subtitleShadow.setWordTint("START", -1, true, 0x000000);
+                    subtitle.setWordTint("SEL", -1, true, 0x000000);
+                    subtitle.setWordTint("START", -1, true, 0x000000);
+                }
+            },
+            callbackScope: this,
+            loop: true,
         });
     }
 }
