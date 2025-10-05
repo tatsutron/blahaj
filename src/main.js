@@ -2,7 +2,6 @@ import { Screen } from "./util/Screen";
 import { Boot } from "./scenes/Boot";
 import { Preloader } from "./scenes/Preloader";
 import { Menu } from "./scenes/Menu";
-import { TitleScreen } from "./scenes/TitleScreen";
 import { Game } from "./scenes/Game";
 
 //  Find out more information about the Game Config at:
@@ -25,7 +24,7 @@ const config = {
             debug: false,
         },
     },
-    scene: [Boot, Preloader, Menu, TitleScreen, Game],
+    scene: [Boot, Preloader, Menu, Game],
 };
 
 export default new Phaser.Game(config);

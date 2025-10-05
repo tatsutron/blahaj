@@ -336,7 +336,7 @@ export class Menu extends Scene {
         });
         this.input.keyboard.on("keydown-ENTER", (event) => {
             if (index === 0) {
-                this.scene.start("TitleScreen");
+                this.scene.start("Game");
             }
         });
 
